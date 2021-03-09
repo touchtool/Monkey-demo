@@ -21,7 +21,7 @@ class Sprite():
 
     def init_canvas_object(self):
         self.photo_img = tk.PhotoImage(file=self.image_file)
-        self.canvas_object_id = self.cavas.create_image(self.x, self.y, image=self.photo_img)
+        self.canvas_object_id = self.canvas.create_image(self.x, self.y, image=self.photo_img)
 
     def render(self):
         self.canvas.coords(self.canvas_object_id, self.x, self.y)
@@ -57,7 +57,7 @@ class Monkey(tk.Frame):
         self.canvas.grid(sticky="news")
 
     def create_sprite(self):
-        self.banana = Sprite(self.cavas, "banana.png", 100, 200)
+        self.banana = Banana(self.canvas, "banana.png", 100, 200)
         self.banana.set_speed(10, 20)
 
     def animate(self):
