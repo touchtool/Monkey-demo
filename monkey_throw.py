@@ -41,6 +41,9 @@ class Banana(Sprite):
 
 
 class Monkey(GameApp):
+    def init_game(self):
+        self.create_sprite()
+
     def create_sprite(self):
         self.banana = Banana(self, "banana.png", 100, 400)
         self.banana.set_speed(15, 25)
@@ -52,8 +55,11 @@ class Monkey(GameApp):
         self.sprite.append(self.monkey)
         self.sprite.append(self.enemy)
 
-    def init_game(self):
-        self.create_sprite()
+    def on_key_press(self, event):
+        print("key press", event)
+
+    def on_key_release(self, event):
+        print("key release", event)
 
 
 if __name__ == "__main__":
