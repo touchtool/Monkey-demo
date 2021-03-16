@@ -14,13 +14,16 @@ class Banana(Sprite):
 
         self.start_x = self.x
         self.start_y = self.y
+        self.start_vx = 0
+        self.start_vy = 0
         self.is_move = False
-
-        self.hide()
 
     def set_speed(self, vx, vy):
         self.vx = vx
         self.vy = vy
+
+        self.start_vx = self.vx
+        self.start_vy = self.vy
 
     def update(self):
         if self.is_move:
@@ -28,7 +31,12 @@ class Banana(Sprite):
             self.y -= self.vy
             self.vy -= gravity
 
+            if self.y > height:
+                self.stop()
+                self.hide()
+
     def start(self):
+        self.show()
         self.is_move = True
 
     def stop(self):
@@ -37,6 +45,8 @@ class Banana(Sprite):
     def reset(self):
         self.x = self.start_x
         self.y = self.start_y
+        self.vx = self.start_vx
+        self.vy = self.start_vy
         self.stop()
 
 
@@ -56,7 +66,10 @@ class Monkey(GameApp):
         self.sprite.append(self.enemy)
 
     def on_key_press(self, event):
-        print("key press", event)
+        if event.char == " ":
+            if not self.banana.is_move:
+                self.banana.reset()
+                self.banana.start()
 
     def on_key_release(self, event):
         print("key release", event)
