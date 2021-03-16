@@ -12,23 +12,45 @@ class Banana(Sprite):
         self.vx = 0
         self.vy = 0
 
+        self.start_x = self.x
+        self.start_y = self.y
+        self.is_move = False
+
+        self.hide()
+
     def set_speed(self, vx, vy):
         self.vx = vx
         self.vy = vy
 
     def update(self):
-        self.x += 5
-        self.y -= self.vy
-        self.vy -= gravity
+        if self.is_move:
+            self.x += 5
+            self.y -= self.vy
+            self.vy -= gravity
+
+    def start(self):
+        self.is_move = True
+
+    def stop(self):
+        self.is_move = False
+
+    def reset(self):
+        self.x = self.start_x
+        self.y = self.start_y
+        self.stop()
 
 
 class Monkey(GameApp):
     def create_sprite(self):
         self.banana = Banana(self, "banana.png", 100, 400)
         self.banana.set_speed(15, 25)
+
         self.monkey = Sprite(self, "monkey.png", 100, 400)
+        self.enemy = Sprite(self, "monkey.png", 700, 400)
+
         self.sprite.append(self.banana)
         self.sprite.append(self.monkey)
+        self.sprite.append(self.enemy)
 
     def init_game(self):
         self.create_sprite()

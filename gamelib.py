@@ -35,6 +35,8 @@ class Sprite:
         self.x = x
         self.y = y
 
+        self.is_visible = True
+
         self.init_canvas_object()
         self.init_sprite()
 
@@ -46,7 +48,16 @@ class Sprite:
         self.canvas_object_id = self.canvas.create_image(self.x, self.y, image=self.photo_img)
 
     def render(self):
-        self.canvas.coords(self.canvas_object_id, self.x, self.y)
+        if self.is_visible:
+            self.canvas.coords(self.canvas_object_id, self.x, self.y)
+
+    def show(self):
+        self.is_visible = True
+        self.canvas.itemconfigure(self.canvas_object_id, state="normal")
+
+    def hide(self):
+        self.is_visible = False
+        self.canvas.itemconfigure(self.canvas_object_id, state="hidden")
 
     def update(self):
         pass
