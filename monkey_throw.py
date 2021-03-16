@@ -56,14 +56,15 @@ class Monkey(tk.Frame):
         self.canvas = tk.Canvas(self, borderwidth=0, width=width, height=height, highlightthickness=0)
         self.canvas.grid(sticky="news")
 
+
     def create_sprite(self):
-        self.banana = Banana(self.canvas, "banana.png", 100, 200)
+        self.banana = Banana(self.canvas, "banana.png", 100, 100)
         self.banana.set_speed(10, 20)
 
     def animate(self):
         self.banana.update()
         self.banana.render()
-        self.after(delay, self.animate)
+        self.after(delay, self.update)
 
     def start(self):
         self.after(0, self.animate)
