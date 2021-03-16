@@ -26,9 +26,13 @@ class Monkey(GameApp):
     def create_sprite(self):
         self.banana = Banana(self, "banana.png", 100, 400)
         self.banana.set_speed(15, 25)
+
         self.monkey = Sprite(self, "monkey.png", 100, 400)
+        self.enemy = Sprite(self, "monkey.png", 500, 400)
+
         self.sprite.append(self.banana)
         self.sprite.append(self.monkey)
+        self.sprite.append(self.enemy)
 
     def init_game(self):
         self.create_sprite()
