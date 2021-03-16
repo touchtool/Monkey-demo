@@ -7,7 +7,7 @@ delay = 33
 gravity = 1
 
 
-class Sprite():
+class Sprite:
     def __init__(self, canvas, image_file, x=0, y=0):
         self.image_file = image_file
         self.canvas = canvas
@@ -15,6 +15,7 @@ class Sprite():
         self.y = y
 
         self.init_canvas_object()
+        self.init_sprite()
 
     def init_sprite(self):
         pass
@@ -45,29 +46,35 @@ class Banana(Sprite):
         self.vy -= gravity
 
 
-class Monkey(tk.Frame):
+class GameApp(tk.Frame):
     def __init__(self, parents):
         super().__init__(parents)
         self.grid(sticky="news")
-        self.create_widget()
-        self.create_sprite()
+        self.create_canvas()
+        self.sprite = []
+        self.init_game()
 
-    def create_widget(self):
+    def create_canvas(self):
         self.canvas = tk.Canvas(self, borderwidth=0, width=width, height=height, highlightthickness=0)
         self.canvas.grid(sticky="news")
-
-
-    def create_sprite(self):
-        self.banana = Banana(self.canvas, "banana.png", 100, 100)
-        self.banana.set_speed(10, 20)
 
     def animate(self):
         self.banana.update()
         self.banana.render()
-        self.after(delay, self.update)
+        self.after(delay, self.animate)
 
     def start(self):
         self.after(0, self.animate)
+
+
+class Monkey(GameApp):
+    def create_sprite(self):
+        self.banana = Banana(self.canvas, "banana.png", 100, 300)
+        self.banana.set_speed(15, 25)
+
+    def init_game(self):
+        self.create_sprite()
+        self.sprite.append(self.banana)
 
 
 if __name__ == "__main__":
