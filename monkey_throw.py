@@ -69,12 +69,16 @@ class GameApp(tk.Frame):
 
 class Monkey(GameApp):
     def create_sprite(self):
-        self.banana = Banana(self.canvas, "banana.png", 100, 300)
+        self.banana = Banana(self.canvas, "banana.png", 100, 400)
         self.banana.set_speed(15, 25)
+        self.monkey = Sprite(self.canvas, "monkey.png", 100, 400)
+        self.sprite.append(self.banana)
+        self.sprite.append(self.monkey)
 
     def init_game(self):
         self.create_sprite()
         self.sprite.append(self.banana)
+
 
 
 if __name__ == "__main__":
