@@ -1,34 +1,10 @@
 import tkinter as tk
-import tkinter.ttk as ttk
+from gamelib import Sprite, GameApp
 
 width = 800
 height = 500
 delay = 33
 gravity = 1
-
-
-class Sprite:
-    def __init__(self, canvas, image_file, x=0, y=0):
-        self.image_file = image_file
-        self.canvas = canvas
-        self.x = x
-        self.y = y
-
-        self.init_canvas_object()
-        self.init_sprite()
-
-    def init_sprite(self):
-        pass
-
-    def init_canvas_object(self):
-        self.photo_img = tk.PhotoImage(file=self.image_file)
-        self.canvas_object_id = self.canvas.create_image(self.x, self.y, image=self.photo_img)
-
-    def render(self):
-        self.canvas.coords(self.canvas_object_id, self.x, self.y)
-
-    def update(self):
-        pass
 
 
 class Banana(Sprite):
@@ -46,45 +22,22 @@ class Banana(Sprite):
         self.vy -= gravity
 
 
-class GameApp(tk.Frame):
-    def __init__(self, parents):
-        super().__init__(parents)
-        self.grid(sticky="news")
-        self.create_canvas()
-        self.sprite = []
-        self.init_game()
-
-    def create_canvas(self):
-        self.canvas = tk.Canvas(self, borderwidth=0, width=width, height=height, highlightthickness=0)
-        self.canvas.grid(sticky="news")
-
-    def animate(self):
-        self.banana.update()
-        self.banana.render()
-        self.after(delay, self.animate)
-
-    def start(self):
-        self.after(0, self.animate)
-
-
 class Monkey(GameApp):
     def create_sprite(self):
-        self.banana = Banana(self.canvas, "banana.png", 100, 400)
+        self.banana = Banana(self, "banana.png", 100, 400)
         self.banana.set_speed(15, 25)
-        self.monkey = Sprite(self.canvas, "monkey.png", 100, 400)
+        self.monkey = Sprite(self, "monkey.png", 100, 400)
         self.sprite.append(self.banana)
         self.sprite.append(self.monkey)
 
     def init_game(self):
         self.create_sprite()
-        self.sprite.append(self.banana)
-
 
 
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Monkey Game")
     root.resizable(False, False)
-    app = Monkey(root)
+    app = Monkey(root, width, height, delay)
     app.start()
     root.mainloop()
